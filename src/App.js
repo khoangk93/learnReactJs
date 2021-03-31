@@ -1,40 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button } from '@material-ui/core';
+import Header from 'components/Header';
+import { useSnackbar } from 'notistack';
+import React, { useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import categoryApi from './api/categoryApi';
+import './App.scss';
+import AlbumFeature from './features/Album';
+import CounterFeature from './features/Counter';
+import TodoFeature from './features/Todo';
 
 function App() {
-  const name = 'Khoan';
-  const age = 18;
-  const isMale = true;
-  const student = {
-    name: 'Ease frontend',
-  };
-  const colorList = ['red', 'green', 'blue'];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const params = {
+        _limit: 2,
+      };
+      const productList = await categoryApi.getAll(params);
+
+      console.log('productList', productList);
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>Khoan Gip</p>
-        <p>
-          Xin chao {name} - {age}
-        </p>
-        <p>
-          {isMale && (
-            <>
-              <span>Male</span>
-              <span>Male</span>
-              <span>Male</span>
-            </>
-          )}
-        </p>
-        <p>{student.name}</p>
-        <ul>
-          {colorList.map((color) => (
-            <li key={color} style={{ color }}>
-              {color}
-            </li>
-          ))}
-        </ul>
+    <div className="App">
+      <Header />
+
+      <header className="App-header">
+        <Switch>
+          {/* <Redirect from="/" to="/home-page" exact /> */}
+          {/* <Route path="/" component={HomePage} exact /> */}
+          <Route path="/" component={CounterFeature} exact />
+
+          <Route path="/todos" component={TodoFeature} />
+          <Route path="/albums" component={AlbumFeature} />
+
+          {/* <Route component={NotFound} /> */}
+        </Switch>
+
+        <h1>Footer</h1>
       </header>
     </div>
   );

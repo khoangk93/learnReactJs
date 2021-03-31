@@ -1,0 +1,7 @@
+.album {
+  & > img {
+    max-width: 160px;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+}
